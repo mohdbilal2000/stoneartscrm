@@ -288,28 +288,134 @@
   overflow: auto;
 }
 
+/* Cart item styling */
 .w-commerce-commercecartitem {
-  align-items: flex-start;
-  padding-top: 12px;
-  padding-bottom: 12px;
   display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.w-commerce-commercecartitem:last-child {
+  border-bottom: none;
 }
 
 .w-commerce-commercecartitemimage {
-  width: 60px;
-  height: 0%;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+  flex-shrink: 0;
 }
 
 .w-commerce-commercecartiteminfo {
-  flex-direction: column;
   flex: 1;
-  margin-left: 16px;
-  margin-right: 16px;
-  display: flex;
+  min-width: 0;
 }
 
 .w-commerce-commercecartproductname {
-  font-weight: 700;
+  font-weight: 600;
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+.w-commerce-commercecartproductoption {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.6);
+  margin-bottom: 4px;
+}
+
+.w-commerce-commercecartproductprice {
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.cart-quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.cart-quantity-input {
+  width: 50px;
+  text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  padding: 4px;
+  font-size: 14px;
+}
+
+.cart-qty-btn {
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.2s;
+}
+
+.cart-qty-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.cart-delete-link {
+  color: rgba(0, 0, 0, 0.6);
+  text-decoration: underline;
+  font-size: 12px;
+  margin-top: 8px;
+  display: inline-block;
+}
+
+.cart-delete-link:hover {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.cart-qty-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.cart-qty-btn {
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.2s;
+}
+
+.cart-qty-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.cart-qty-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.cart-delete-link {
+  color: rgba(0, 0, 0, 0.6);
+  text-decoration: underline;
+  font-size: 12px;
+  margin-top: 8px;
+  display: inline-block;
+}
+
+.cart-delete-link:hover {
+  color: rgba(0, 0, 0, 0.8);
 }
 
 .w-commerce-commercecartoptionlist {
