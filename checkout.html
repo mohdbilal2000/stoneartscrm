@@ -21,6 +21,443 @@
         .js-link {
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1); /* Light grey tap highlight for links */
         }
+        
+        /* ============================================
+           CHECKOUT FORM UI/UX REFINEMENTS
+           Conversion-focused improvements within existing design system
+           ============================================ */
+        
+        /* Form Container - Subtle Background */
+        .w-commerce-commercecheckoutformcontainer {
+          background: var(--background-stonearts®);
+          padding: 2rem 0;
+        }
+        
+        .w-commerce-commercelayoutcontainer {
+          max-width: 1200px;
+        }
+        
+        /* Section Headers - Match Site's Heading Style */
+        .w-commerce-commercecheckoutblockheader {
+          display: flex;
+          justify-content: space-between;
+          align-items: baseline;
+          margin-bottom: 1rem;
+          padding-bottom: 0.5rem;
+          border-bottom: 1px solid #cccccc;
+        }
+        
+        .w-commerce-commercecheckoutblockheader h4 {
+          font-family: 'Playfair Display', serif;
+          font-size: 1.25rem;
+          font-weight: 600;
+          color: var(--black-stonearts®);
+          margin: 0;
+          letter-spacing: -0.01em;
+        }
+        
+        .w-commerce-commercecheckoutblockheader > div {
+          font-size: 0.875rem;
+          color: #999;
+          font-weight: 500;
+        }
+        
+        /* Fieldset - Improved Grouping and Spacing */
+        .w-commerce-commercecheckoutblockcontent {
+          display: flex;
+          flex-direction: column;
+          gap: 1.125rem;
+          padding: 0;
+        }
+        
+        /* Labels - Match Site's Form Label Style */
+        .w-commerce-commercecheckoutlabel {
+          display: block;
+          margin-bottom: 5px;
+          font-weight: bold;
+          font-size: 14px;
+          color: var(--black-stonearts®);
+          font-family: 'Inter', sans-serif;
+        }
+        
+        /* Input Fields - Match Site's Form Input Style */
+        .w-commerce-commercecheckoutemailinput,
+        .w-commerce-commercecheckoutphoneinput,
+        .w-commerce-commercecheckoutcompanyinput,
+        .w-commerce-commercecheckoutgstinput,
+        .w-commerce-commercecheckoutshippingfullname,
+        .w-commerce-commercecheckoutshippingstreetaddress,
+        .w-commerce-commercecheckoutshippingstreetaddressoptional,
+        .w-commerce-commercecheckoutshippingcity,
+        .w-commerce-commercecheckoutshippingstateprovince,
+        .w-commerce-commercecheckoutshippingzippostalcode,
+        .w-commerce-commercecheckoutbillingfullname,
+        .w-commerce-commercecheckoutbillingstreetaddress,
+        .w-commerce-commercecheckoutbillingstreetaddressoptional,
+        .w-commerce-commercecheckoutbillingcity,
+        .w-commerce-commercecheckoutbillingstateprovince,
+        .w-commerce-commercecheckoutbillingzippostalcode {
+          width: 100%;
+          height: 38px;
+          padding: 8px 12px;
+          border: 1px solid #cccccc;
+          border-radius: 0;
+          font-size: 14px;
+          line-height: 1.42857143;
+          font-family: 'Inter', sans-serif;
+          color: var(--black-stonearts®);
+          background-color: var(--pure-white);
+          transition: border-color 0.15s ease;
+          -webkit-appearance: none;
+          appearance: none;
+        }
+        
+        /* Focus State - Match Site's Form Focus Style */
+        .w-commerce-commercecheckoutemailinput:focus,
+        .w-commerce-commercecheckoutphoneinput:focus,
+        .w-commerce-commercecheckoutcompanyinput:focus,
+        .w-commerce-commercecheckoutgstinput:focus,
+        .w-commerce-commercecheckoutshippingfullname:focus,
+        .w-commerce-commercecheckoutshippingstreetaddress:focus,
+        .w-commerce-commercecheckoutshippingstreetaddressoptional:focus,
+        .w-commerce-commercecheckoutshippingcity:focus,
+        .w-commerce-commercecheckoutshippingstateprovince:focus,
+        .w-commerce-commercecheckoutshippingzippostalcode:focus,
+        .w-commerce-commercecheckoutbillingfullname:focus,
+        .w-commerce-commercecheckoutbillingstreetaddress:focus,
+        .w-commerce-commercecheckoutbillingstreetaddressoptional:focus,
+        .w-commerce-commercecheckoutbillingcity:focus,
+        .w-commerce-commercecheckoutbillingstateprovince:focus,
+        .w-commerce-commercecheckoutbillingzippostalcode:focus {
+          outline: 0;
+          border-color: #3898EC;
+        }
+        
+        /* Placeholder - Match Site's Form Placeholder Style */
+        .w-commerce-commercecheckoutemailinput::placeholder,
+        .w-commerce-commercecheckoutphoneinput::placeholder,
+        .w-commerce-commercecheckoutcompanyinput::placeholder,
+        .w-commerce-commercecheckoutgstinput::placeholder,
+        .w-commerce-commercecheckoutshippingfullname::placeholder,
+        .w-commerce-commercecheckoutshippingstreetaddress::placeholder,
+        .w-commerce-commercecheckoutshippingstreetaddressoptional::placeholder,
+        .w-commerce-commercecheckoutshippingcity::placeholder,
+        .w-commerce-commercecheckoutshippingstateprovince::placeholder,
+        .w-commerce-commercecheckoutshippingzippostalcode::placeholder {
+          color: #999;
+        }
+        
+        /* Select Dropdowns - Match Site's Form Select Style */
+        .w-commerce-commercecheckoutshippingcountryselector,
+        .w-commerce-commercecheckoutbillingcountryselector {
+          display: block;
+          width: 100%;
+          height: 38px;
+          padding: 8px 12px;
+          margin-bottom: 10px;
+          font-size: 14px;
+          line-height: 1.42857143;
+          color: #333333;
+          vertical-align: middle;
+          background-color: #f3f3f3;
+          border: 1px solid #cccccc;
+          border-radius: 0;
+          cursor: pointer;
+          transition: border-color 0.15s ease;
+          -webkit-appearance: none;
+          appearance: none;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+          background-repeat: no-repeat;
+          background-position: right 12px center;
+          padding-right: 36px;
+        }
+        
+        .w-commerce-commercecheckoutshippingcountryselector:focus,
+        .w-commerce-commercecheckoutbillingcountryselector:focus {
+          outline: 0;
+          border-color: #3898EC;
+        }
+        
+        /* Form Row Layout - Optimized Grid */
+        .w-commerce-commercecheckoutrow {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 0.875rem;
+          margin: 0;
+        }
+        
+        .w-commerce-commercecheckoutcolumn {
+          display: flex;
+          flex-direction: column;
+        }
+        
+        /* Customer Type Display - Match Site's Form Style */
+        .customer-type-display {
+          height: 38px;
+          padding: 8px 12px;
+          background-color: var(--background-stonearts®);
+          border: 1px solid #cccccc;
+          border-radius: 0;
+          font-weight: 500;
+          color: var(--black-stonearts®);
+          margin-top: 0.5rem;
+          font-size: 14px;
+          line-height: 1.42857143;
+          font-family: 'Inter', sans-serif;
+          display: flex;
+          align-items: center;
+        }
+        
+        /* Conditional Fields - Smooth Transitions */
+        #companyField, #gstField {
+          transition: opacity 0.25s ease, max-height 0.25s ease;
+          overflow: hidden;
+        }
+        
+        #companyField[style*="display: none"],
+        #gstField[style*="display: none"] {
+          opacity: 0;
+          max-height: 0;
+          margin: 0;
+          padding: 0;
+        }
+        
+        #companyField:not([style*="display: none"]),
+        #gstField:not([style*="display: none"]) {
+          opacity: 1;
+          max-height: 200px;
+        }
+        
+        /* Form Wrappers - Match Site's Section Style */
+        .w-commerce-commercecheckoutcustomerinfowrapper,
+        .w-commerce-commercecheckoutshippingaddresswrapper,
+        .w-commerce-commercecheckoutbillingaddresswrapper {
+          background: var(--pure-white);
+          padding: 1.5rem;
+          border-radius: 0;
+          margin-bottom: 1.5rem;
+          box-shadow: none;
+          border: none;
+        }
+        
+        /* Place Order Button - Match Site's Submit Button Style */
+        .w-commerce-commercecheckoutplaceorderbutton {
+          width: 100%;
+          padding: 18px;
+          background-color: var(--black-stonearts®);
+          color: var(--pure-white);
+          border: none;
+          border-radius: 2rem;
+          font-size: 1rem;
+          font-weight: 600;
+          font-family: 'Inter', sans-serif;
+          cursor: pointer;
+          transition: background-color 0.2s ease;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          margin-top: 1rem;
+          letter-spacing: -0.04em;
+        }
+        
+        .w-commerce-commercecheckoutplaceorderbutton:hover {
+          background-color: var(--dim-grey);
+        }
+        
+        .w-commerce-commercecheckoutplaceorderbutton:active {
+          background-color: var(--black-stonearts®);
+        }
+        
+        /* Error States - Match Site's Error Style */
+        .w-commerce-commercecheckouterrorstate {
+          background-color: #ffdede;
+          border: none;
+          border-radius: 0;
+          padding: 10px;
+          margin-top: 10px;
+        }
+        
+        .w-checkout-error-msg {
+          color: #c33;
+          font-size: 14px;
+          font-weight: 500;
+          font-family: 'Inter', sans-serif;
+          line-height: 1.42857143;
+        }
+        
+        /* Order Summary - Match Site's Section Style */
+        .w-commerce-commercelayoutsidebar {
+          position: sticky;
+          top: 1.5rem;
+          align-self: start;
+        }
+        
+        .w-commerce-commercecheckoutordersummarywrapper {
+          background: var(--pure-white);
+          padding: 1.5rem;
+          border-radius: 0;
+          box-shadow: none;
+          border: none;
+        }
+        
+        .w-commerce-commercecheckoutsummaryblockheader h4 {
+          font-family: 'Playfair Display', serif;
+          font-size: 1.375rem;
+          font-weight: 600;
+          color: var(--black-stonearts®);
+          margin: 0 0 1.25rem 0;
+          padding-bottom: 0.75rem;
+          border-bottom: 1px solid var(--brown-grey-stonearts®);
+        }
+        
+        .w-commerce-commercecheckoutsummarylineitem {
+          display: flex;
+          justify-content: space-between;
+          padding: 0.625rem 0;
+          font-size: 0.9375rem;
+          color: var(--light-grey-text);
+          font-family: 'Inter', sans-serif;
+        }
+        
+        .w-commerce-commercecheckoutsummarytotal {
+          font-weight: 700;
+          font-size: 1.125rem;
+          color: var(--black-stonearts®);
+          font-family: 'Inter', sans-serif;
+        }
+        
+        /* Responsive - Mobile-First Adjustments */
+        @media (max-width: 991px) {
+          .w-commerce-commercecheckoutrow {
+            grid-template-columns: 1fr;
+            gap: 0.875rem;
+          }
+          
+          .w-commerce-commercelayoutsidebar {
+            position: static;
+            margin-top: 1.5rem;
+          }
+          
+          .w-commerce-commercecheckoutcustomerinfowrapper,
+          .w-commerce-commercecheckoutshippingaddresswrapper,
+          .w-commerce-commercecheckoutbillingaddresswrapper {
+            padding: 1.5rem;
+          }
+        }
+        
+        @media (max-width: 767px) {
+          .w-commerce-commercecheckoutblockheader {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.375rem;
+          }
+          
+          .w-commerce-commercecheckoutblockheader h4 {
+            font-size: 1.25rem;
+          }
+          
+          .w-commerce-commercecheckoutcustomerinfowrapper,
+          .w-commerce-commercecheckoutshippingaddresswrapper,
+          .w-commerce-commercecheckoutbillingaddresswrapper {
+            padding: 1.25rem;
+          }
+        }
+        
+        /* Required Field Indicators - Subtle but Clear */
+        .w-commerce-commercecheckoutlabel {
+          position: relative;
+        }
+        
+        .w-commerce-commercecheckoutlabel.required::after {
+          content: '*';
+          color: var(--accent-stonearts®);
+          margin-left: 0.25rem;
+          font-weight: 600;
+          font-size: 0.875rem;
+        }
+        
+        /* Validation States - Only Show After Interaction */
+        /* Remove aggressive default error styling - only show after user interaction */
+        input:invalid:not(:placeholder-shown):not(:focus),
+        select:invalid:not(:placeholder-shown):not(:focus) {
+          border-color: #fcc;
+        }
+        
+        input:valid:not(:placeholder-shown):not(:focus),
+        select:valid:not(:placeholder-shown):not(:focus) {
+          border-color: var(--brown-grey-stonearts®);
+        }
+        
+        /* Loading State */
+        .w-commerce-commercecheckoutplaceorderbutton[data-loading="true"] {
+          opacity: 0.7;
+          cursor: not-allowed;
+          pointer-events: none;
+        }
+        
+        /* Shipping Method Section - Match Site's Section Style */
+        .w-commerce-commercecheckoutshippingmethodswrapper {
+          background: var(--pure-white);
+          padding: 1.5rem;
+          border-radius: 0;
+          margin-bottom: 1.5rem;
+          box-shadow: none;
+          border: none;
+        }
+        
+        .w-commerce-commercecheckoutshippingmethoditem {
+          padding: 0.875rem;
+          border: 1px solid #cccccc;
+          border-radius: 0;
+          margin-bottom: 0.75rem;
+          cursor: pointer;
+          transition: border-color 0.15s ease, background-color 0.15s ease;
+        }
+        
+        .w-commerce-commercecheckoutshippingmethoditem:hover {
+          background-color: var(--background-stonearts®);
+          border-color: #3898EC;
+        }
+        
+        .w-commerce-commercecheckoutshippingmethoditem input[type="radio"]:checked + .w-commerce-commercecheckoutshippingmethoddescriptionblock {
+          font-weight: 600;
+        }
+        
+        /* Payment Section - Match Site's Section Style */
+        .w-commerce-commercecheckoutpaymentinfowrapper {
+          background: var(--pure-white);
+          padding: 1.5rem;
+          border-radius: 0;
+          margin-bottom: 1.5rem;
+          box-shadow: none;
+          border: none;
+        }
+        
+        /* Billing Address Toggle - Match Site's Form Style */
+        .w-commerce-commercecheckoutbillingaddresstogglewrapper {
+          margin-top: 1rem;
+          padding-top: 1rem;
+          border-top: 1px solid #cccccc;
+        }
+        
+        .w-commerce-commercecheckoutbillingaddresstogglelabel {
+          font-size: 14px;
+          color: var(--black-stonearts®);
+          font-family: 'Inter', sans-serif;
+          cursor: pointer;
+        }
+        
+        /* Items in Order Section - Better Visibility */
+        .w-commerce-commercecheckoutorderitemslist {
+          min-height: 60px;
+        }
+        
+        /* Improve visual flow between sections */
+        .w-commerce-commercelayoutmain {
+          display: flex;
+          flex-direction: column;
+          gap: 0;
+        }
     </style>
   <!--  CODECRUMBS PROXY  -->
   <script>
@@ -99,6 +536,10 @@
             <div>* Required</div>
           </div>
           <fieldset class="w-commerce-commercecheckoutblockcontent"><label for="wf-ecom-email" class="w-commerce-commercecheckoutlabel">Email *</label><input id="wf-ecom-email" class="w-commerce-commercecheckoutemailinput" type="text" name="email" required=""></fieldset>
+          <fieldset class="w-commerce-commercecheckoutblockcontent"><label for="wf-ecom-phone" class="w-commerce-commercecheckoutlabel">Phone Number *</label><input id="wf-ecom-phone" class="w-commerce-commercecheckoutphoneinput" type="tel" name="phone" required=""></fieldset>
+          <fieldset class="w-commerce-commercecheckoutblockcontent"><label class="w-commerce-commercecheckoutlabel">Customer Type</label><div id="customerTypeDisplay" class="customer-type-display"></div></fieldset>
+          <fieldset class="w-commerce-commercecheckoutblockcontent" id="companyField" style="display: none;"><label for="wf-ecom-company" class="w-commerce-commercecheckoutlabel">Company Name</label><input id="wf-ecom-company" class="w-commerce-commercecheckoutcompanyinput" type="text" name="company"></fieldset>
+          <fieldset class="w-commerce-commercecheckoutblockcontent" id="gstField" style="display: none;"><label for="wf-ecom-gst" class="w-commerce-commercecheckoutlabel">GST/VAT Number</label><input id="wf-ecom-gst" class="w-commerce-commercecheckoutgstinput" type="text" name="gst_vat"></fieldset>
         </form>
         <form bind="64ad5018cecbda3ed3e03cea00000000001f" data-node-type="commerce-checkout-shipping-address-wrapper" class="w-commerce-commercecheckoutshippingaddresswrapper">
           <div class="w-commerce-commercecheckoutblockheader">
@@ -786,6 +1227,36 @@
       disableDecrementAtOne: true,
     });
   });
+</script>
+<script src="js/order-manager.js"></script>
+<script src="js/checkout-handler.js"></script>
+<script>
+  // Add required field indicators for better accessibility
+  (function() {
+    'use strict';
+    function addRequiredIndicators() {
+      const requiredInputs = document.querySelectorAll('input[required], select[required]');
+      requiredInputs.forEach(function(input) {
+        const label = input.previousElementSibling;
+        if (label && label.classList.contains('w-commerce-commercecheckoutlabel')) {
+          label.classList.add('required');
+        }
+        // Also check for label with 'for' attribute
+        if (input.id) {
+          const labelFor = document.querySelector('label[for="' + input.id + '"]');
+          if (labelFor && labelFor.classList.contains('w-commerce-commercecheckoutlabel')) {
+            labelFor.classList.add('required');
+          }
+        }
+      });
+    }
+    
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', addRequiredIndicators);
+    } else {
+      addRequiredIndicators();
+    }
+  })();
 </script>
 </body>
 </html>

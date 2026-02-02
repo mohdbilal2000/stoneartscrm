@@ -45,6 +45,7 @@
   }
   input[type="number"] {
     -moz-appearance: textfield;
+    appearance: textfield;
   }
 </style>
   <script type="application/ld+json" class="reviews-schema" data-ref="f62691fefcaf3616fe8b2f1f405e0bfb83f2bae5">
@@ -588,8 +589,9 @@
           <div class="sample-content_wrap">
             <div class="sample-selection_wrap">
               <div bind="59ce43f0-84b9-aae1-9f05-2619e4974db0" class="w-dyn-list">
-                <div bind="59ce43f0-84b9-aae1-9f05-2619e4974db1" role="list" class="sample-grid w-dyn-items">
-                  <div bind="59ce43f0-84b9-aae1-9f05-2619e4974db2" id="w-node-_59ce43f0-84b9-aae1-9f05-2619e4974db2-d083e3a1" data-w-id="59ce43f0-84b9-aae1-9f05-2619e4974db2" role="listitem" class="collection-item-5 w-dyn-item">
+                <div bind="59ce43f0-84b9-aae1-9f05-2619e4974db1" role="list" class="sample-grid w-dyn-items" id="sample-boxes-grid-container">
+                  <!-- Hardcoded item removed - will be populated by populate-cms.js -->
+                  <div bind="59ce43f0-84b9-aae1-9f05-2619e4974db2" id="w-node-_59ce43f0-84b9-aae1-9f05-2619e4974db2-d083e3a1" data-w-id="59ce43f0-84b9-aae1-9f05-2619e4974db2" role="listitem" class="collection-item-5 w-dyn-item" style="display: none;">
                     <div bind="919d529b-3872-d9ce-05a7-c2d04430d946" class="item-wrap_samples">
                       <div class="top_titel-wrap">
                         <div class="header-wrap_samples">
@@ -1034,5 +1036,12 @@ $(document).ready(function(){
   accordion.init(accSettings);
 });
 </script>
+  <!-- CMS Population Scripts -->
+  <script src="js/cart-manager.js" type="text/javascript"></script>
+  <script src="js/populate-cms.js" type="text/javascript"></script>
+  <script src="js/add-to-cart-handler.js" type="text/javascript"></script>
+  <script src="js/button-click-fix.js" type="text/javascript"></script>
+  <!-- Debug script - remove in production -->
+  <script src="js/debug-sample-boxes.js" type="text/javascript"></script>
 </body>
 </html>

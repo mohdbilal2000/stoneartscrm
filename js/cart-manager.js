@@ -106,6 +106,11 @@
       this.saveCart(cart);
       this.renderCart();
       this.updateCartBadge();
+      
+      // Open cart immediately after adding item
+      console.log('CartManager: Item added, opening cart...');
+      this.openCart();
+      
       return true;
     },
 
@@ -160,49 +165,75 @@
       return `€${price.toFixed(2)} ${currency}`;
     },
 
-    // Render cart items in sidebar
+    // Render cart items in sidebar - WITH ERROR HANDLING
     renderCart: function() {
-      const cart = this.getCart();
-      const cartList = document.querySelector('[bind="4bc36725-f958-4612-d2cb-e90fd749bb31"]');
-      const cartListAlt = document.querySelector('[bind="4bc36725-f958-4612-d2cb-e90fd749bb6e"]');
-      const cartForm = document.querySelector('[data-node-type="commerce-cart-form"]');
-      const emptyState = document.querySelector('[bind="4bc36725-f958-4612-d2cb-e90fd749bb50"]');
-      const totalElement = document.querySelector('[bind="4bc36725-f958-4612-d2cb-e90fd749bb45"]');
-      const totalElementAlt = document.querySelector('[bind="4bc36725-f958-4612-d2cb-e90fd749bb82"]');
-
-      // Use whichever cart list exists
-      const targetCartList = cartList || cartListAlt;
-      const targetTotalElement = totalElement || totalElementAlt;
-
-      if (!targetCartList) {
-        console.warn('Cart Manager: Cart list container not found');
-        return;
-      }
-
-      // Show/hide empty state
-      if (emptyState) {
-        if (cart.items.length === 0) {
-          emptyState.style.display = 'block';
-          if (cartForm) cartForm.style.display = 'none';
-        } else {
-          emptyState.style.display = 'none';
-          if (cartForm) cartForm.style.display = 'block';
+      try {
+        const cart = this.getCart();
+        
+        // Try multiple selectors for cart list
+        let cartList = document.querySelector('[bind="4bc36725-f958-4612-d2cb-e90fd749bb31"]');
+        if (!cartList) cartList = document.querySelector('[bind="4bc36725-f958-4612-d2cb-e90fd749bb6e"]');
+        if (!cartList) cartList = document.querySelector('.w-commerce-commercecartlist');
+        if (!cartList) {
+          // Try to find by class pattern
+          const allDivs = document.querySelectorAll('div');
+          for (let div of allDivs) {
+            if (div.className && div.className.includes('commercecartlist')) {
+              cartList = div;
+              break;
+            }
+          }
         }
-      }
+        
+        const cartForm = document.querySelector('[data-node-type="commerce-cart-form"]');
+        const emptyState = document.querySelector('[bind="4bc36725-f958-4612-d2cb-e90fd749bb50"]');
+        let totalElement = document.querySelector('[bind="4bc36725-f958-4612-d2cb-e90fd749bb45"]');
+        if (!totalElement) totalElement = document.querySelector('[bind="4bc36725-f958-4612-d2cb-e90fd749bb82"]');
 
-      // Clear existing items
-      targetCartList.innerHTML = '';
+        // Use whichever cart list exists
+        const targetCartList = cartList;
+        const targetTotalElement = totalElement;
 
-      // Render cart items
-      cart.items.forEach((item, index) => {
-        const cartItem = this.createCartItemHTML(item);
-        targetCartList.appendChild(cartItem);
-      });
+        if (!targetCartList) {
+          console.warn('⚠️ Cart Manager: Cart list container not found - cart items may not display');
+          // Don't return - still try to update badge and total
+        } else {
+          // Show/hide empty state
+          if (emptyState) {
+            if (cart.items.length === 0) {
+              emptyState.style.display = 'block';
+              if (cartForm) cartForm.style.display = 'none';
+            } else {
+              emptyState.style.display = 'none';
+              if (cartForm) cartForm.style.display = 'block';
+            }
+          }
 
-      // Update total
-      if (targetTotalElement) {
-        const total = this.getCartTotal();
-        targetTotalElement.textContent = this.formatPrice(total);
+          // Clear existing items
+          targetCartList.innerHTML = '';
+
+          // Render cart items
+          cart.items.forEach((item, index) => {
+            try {
+              const cartItem = this.createCartItemHTML(item);
+              targetCartList.appendChild(cartItem);
+            } catch (error) {
+              console.error(`❌ Error rendering cart item ${index}:`, error);
+            }
+          });
+        }
+
+        // Update total
+        if (targetTotalElement) {
+          try {
+            const total = this.getCartTotal();
+            targetTotalElement.textContent = this.formatPrice(total);
+          } catch (error) {
+            console.error('❌ Error updating cart total:', error);
+          }
+        }
+      } catch (error) {
+        console.error('❌ Cart Manager: Error in renderCart:', error);
       }
     },
 
@@ -253,18 +284,188 @@
       });
     },
 
-    // Open cart sidebar
+    // Open cart sidebar with slide animation from right - ENHANCED VERSION
     openCart: function() {
-      const cartWrapper = document.querySelector('[data-node-type="commerce-cart-wrapper"]');
-      const cartContainer = document.querySelector('[data-node-type="commerce-cart-container-wrapper"]');
-      if (cartContainer) {
-        cartContainer.style.display = 'block';
-        // Trigger Webflow cart open event if needed
-        const openLink = document.querySelector('[data-node-type="commerce-cart-open-link"]');
-        if (openLink) {
-          openLink.click();
+      try {
+        console.log('CartManager.openCart: Starting...');
+        
+        // Re-render cart first to ensure it's up to date
+        this.renderCart();
+        
+        // Try ALL possible selectors in order of preference
+        let container = null;
+        const selectors = [
+          '[data-node-type="commerce-cart-container-wrapper"]',
+          '.w-commerce-commercecartcontainerwrapper',
+          '[bind*="4bc36725-f958-4612-d2cb-e90fd749bb28"]',
+          '[bind*="4bc36725-f958-4612-d2cb-e90fd749bb65"]',
+          '.cart-container-2',
+          '.cart-container-3',
+          '[class*="commercecartcontainerwrapper"]'
+        ];
+        
+        for (let selector of selectors) {
+          const elements = document.querySelectorAll(selector);
+          if (elements.length > 0) {
+            container = elements[0];
+            console.log('✅ CartManager.openCart: Found container with selector:', selector);
+            break;
+          }
         }
+        
+        // If still not found, try to find by class name patterns
+        if (!container) {
+          const allDivs = document.querySelectorAll('div');
+          for (let div of allDivs) {
+            if (div.className && (
+              div.className.includes('commercecartcontainerwrapper') ||
+              div.className.includes('cart-container')
+            )) {
+              container = div;
+              console.log('✅ CartManager.openCart: Found container by class pattern');
+              break;
+            }
+          }
+        }
+        
+        if (!container) {
+          console.error('❌ CartManager.openCart: No cart containers found!');
+          console.error('Tried selectors:', selectors);
+          // Try one more time after a short delay (maybe DOM not ready)
+          setTimeout(() => {
+            console.log('CartManager.openCart: Retrying after delay...');
+            this.openCart();
+          }, 100);
+          return;
+        }
+        
+        // Get the cart wrapper
+        let wrapper = container.closest('[data-node-type="commerce-cart-wrapper"]') ||
+                     container.closest('.w-commerce-commercecartwrapper') ||
+                     container.parentElement;
+        
+        // FORCE visibility with cssText using !important (most forceful)
+        // Remove any inline style that might hide it first
+        container.removeAttribute('style');
+        
+        // Set ALL styles directly with !important
+        container.style.cssText = `
+          display: flex !important;
+          visibility: visible !important;
+          position: fixed !important;
+          top: 0 !important;
+          left: 0 !important;
+          right: 0 !important;
+          bottom: 0 !important;
+          width: 100% !important;
+          height: 100vh !important;
+          z-index: 99999 !important;
+          background-color: rgba(0, 0, 0, 0.5) !important;
+          opacity: 1 !important;
+          pointer-events: auto !important;
+        `;
+        
+        // Get the actual cart box (white drawer)
+        let cartBox = container.querySelector('[data-node-type="commerce-cart-container"]') ||
+                     container.querySelector('.w-commerce-commercecartcontainer') ||
+                     container.querySelector('.cart-container-2') ||
+                     container.querySelector('.cart-container-3');
+        
+        if (!cartBox) {
+          // Try to find any child div that might be the cart box
+          const children = container.children;
+          for (let child of children) {
+            if (child.tagName === 'DIV' && child.style) {
+              cartBox = child;
+              break;
+            }
+          }
+        }
+        
+        if (cartBox) {
+          // Set up the cart box with forced styles
+          cartBox.style.cssText = `
+            position: absolute !important;
+            top: 0 !important;
+            right: 0 !important;
+            width: 100% !important;
+            max-width: 480px !important;
+            height: 100% !important;
+            background-color: #fff !important;
+            overflow-y: auto !important;
+            box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15) !important;
+            transform: translateX(100%) !important;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+          `;
+          
+          // Slide in from right - use requestAnimationFrame for smooth animation
+          requestAnimationFrame(() => {
+            setTimeout(() => {
+              // Use setProperty to apply transform with !important, or just set it directly
+              cartBox.style.setProperty('transform', 'translateX(0)', 'important');
+              console.log('✅ CartManager.openCart: Cart drawer opened and slid in');
+            }, 10);
+          });
+        } else {
+          console.warn('⚠️ CartManager.openCart: Cart box not found, but container is visible');
+        }
+        
+        // Add Webflow classes for compatibility
+        if (container.classList) {
+          container.classList.add('w-commerce-commercecartopen');
+        }
+        if (wrapper && wrapper.classList) {
+          wrapper.classList.add('w-commerce-commercecartopen');
+        }
+        
+        // Add backdrop click handler to close
+        const backdropClick = (e) => {
+          if (e.target === container) {
+            this.closeCart();
+            container.removeEventListener('click', backdropClick);
+          }
+        };
+        container.addEventListener('click', backdropClick);
+        
+        console.log('✅ CartManager.openCart: Cart opened successfully');
+      } catch (error) {
+        console.error('❌ CartManager.openCart: Error opening cart:', error);
+        // Retry once after error
+        setTimeout(() => {
+          console.log('CartManager.openCart: Retrying after error...');
+          this.openCart();
+        }, 200);
       }
+    },
+
+    // Close cart sidebar
+    closeCart: function() {
+      console.log('CartManager.closeCart: Starting...');
+      
+      const cartContainers = document.querySelectorAll('[data-node-type="commerce-cart-container-wrapper"]');
+      const cartWrappers = document.querySelectorAll('[data-node-type="commerce-cart-wrapper"]');
+
+      cartContainers.forEach(container => {
+        const cartBox = container.querySelector('[data-node-type="commerce-cart-container"]');
+        if (cartBox) {
+          // Slide out to the right
+          cartBox.style.transform = 'translateX(100%)';
+        }
+        
+        // Hide after animation
+        setTimeout(() => {
+          container.style.display = 'none';
+          container.style.visibility = 'hidden';
+          container.style.opacity = '0';
+          container.classList.remove('w-commerce-commercecartopen');
+        }, 400); // Match animation duration
+      });
+
+      cartWrappers.forEach(wrapper => {
+        wrapper.classList.remove('w-commerce-commercecartopen');
+      });
+      
+      console.log('CartManager.closeCart: Cart closed');
     },
 
     // Attach event listeners for cart interactions
@@ -316,38 +517,60 @@
         }
       });
 
-      // Handle cart open/close (if Webflow handlers don't work)
+      // Handle cart open/close using event delegation (works for dynamically added buttons)
+      // Use capture phase to ensure we catch events early
+      document.addEventListener('click', function(e) {
+        const cartOpenLink = e.target.closest('[data-node-type="commerce-cart-open-link"]');
+        if (cartOpenLink) {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          console.log('CartManager: Cart button clicked in navbar (delegated)');
+          self.renderCart();
+          self.openCart();
+          return false;
+        }
+        
+        const cartCloseLink = e.target.closest('[data-node-type="commerce-cart-close-link"]');
+        if (cartCloseLink) {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          console.log('CartManager: Cart close button clicked (delegated)');
+          self.closeCart();
+          return false;
+        }
+      }, true); // Capture phase
+      
+      // Also attach directly to existing links as backup
       const cartOpenLinks = document.querySelectorAll('[data-node-type="commerce-cart-open-link"]');
       cartOpenLinks.forEach(link => {
         link.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log('CartManager: Cart button clicked (direct handler)');
           self.renderCart();
-        });
+          self.openCart();
+          return false;
+        }, true);
+      });
+      
+      // Also handle cart close links
+      const cartCloseLinks = document.querySelectorAll('[data-node-type="commerce-cart-close-link"]');
+      cartCloseLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log('CartManager: Cart close button clicked (direct handler)');
+          self.closeCart();
+          return false;
+        }, true);
       });
     }
   };
 
   // Expose CartManager globally
+  // NOTE: Do NOT auto-initialize here. Let populate-cms.js initialize after CMS data loads.
   window.CartManager = CartManager;
-
-  // Auto-initialize when DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-      // Wait for CMS data to be loaded
-      if (window.cmsData) {
-        CartManager.init(window.cmsData);
-      } else {
-        // Try to get CMS data from populate-cms.js
-        setTimeout(function() {
-          if (window.cmsData) {
-            CartManager.init(window.cmsData);
-          }
-        }, 500);
-      }
-    });
-  } else {
-    if (window.cmsData) {
-      CartManager.init(window.cmsData);
-    }
-  }
 
 })();
